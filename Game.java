@@ -11,6 +11,13 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
+ * Implemented look command
+ * 
+ * Added eat command, with a simple text response
+ * Streamlined printing of available commands
+ * 
+ * 
+ * 
  * @author  Nicholas Trilone
  * @version 2021.11.01
  */
@@ -132,6 +139,10 @@ public class Game
             case LOOK:
                 look();
                 break;
+                
+            case EAT:
+                eat();
+                break;
         }
         return wantToQuit;
     }
@@ -202,5 +213,15 @@ public class Game
     private void look()
     {
         System.out.println(currentRoom.getLongDescription());
+    }
+    
+    /** 
+     * Causes the player character to eat.
+     * Currently does nothing other than print a message.
+     * Has no parameters or return values.
+     */
+    private void eat()
+    {
+        System.out.println("You have eaten now and you are not hungry any more.");
     }
 }
