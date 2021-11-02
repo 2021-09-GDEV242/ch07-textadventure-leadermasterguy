@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -11,12 +13,18 @@
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
+ * 
+ * 
+ * Passing Requirements:
  * Implemented look command
  * 
+ * C Requirements:
  * Added eat command, with a simple text response
  * Streamlined printing of available commands
  * 
+ * B Requirements:
  * 
+ * A Requirements:
  * 
  * @author  Nicholas Trilone
  * @version 2021.11.01
@@ -73,6 +81,11 @@ public class Game
         lab.setExit("east", office);
 
         office.setExit("west", lab);
+        
+        // add items to rooms
+        outside.addItem("book","A book idk", 2);
+        outside.addItem("key","An important looking key", 1);
+        outside.addItem("rock","Just a rock", 3);
 
         currentRoom = outside;  // start game outside
     }
@@ -143,6 +156,10 @@ public class Game
             case EAT:
                 eat();
                 break;
+                
+            case TAKE:
+                take(command.getSecondWord());
+                break;
         }
         return wantToQuit;
     }
@@ -208,11 +225,23 @@ public class Game
     /** 
      * Examines the room that the player is currently in.
      * Prints the room's long description.
+     * Prints out any items that are in the room.
      * Has no parameters or return values.
      */
     private void look()
     {
         System.out.println(currentRoom.getLongDescription());
+        if (currentRoom.getItems().size()==0){
+            System.out.println("There are no items in this room.");
+        }
+        else{
+            System.out.println("The item(s) in this room are:");
+            int i=0;
+            while(i<currentRoom.getItems().size()){
+                System.out.println(currentRoom.getItems().get(i).getName());
+                i++;
+            }
+        }
     }
     
     /** 
@@ -223,5 +252,15 @@ public class Game
     private void eat()
     {
         System.out.println("You have eaten now and you are not hungry any more.");
+    }
+    
+    /** 
+     * Causes the player to take an item out of a room.
+     * Has no return values.
+     * @param name of item attempting to remove
+     */
+    private void take(String name)
+    {
+        currentRoom.removeItem(name);
     }
 }
