@@ -204,6 +204,9 @@ public class Game
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
+        
+        //prints the objects that are inside of the room
+        currentRoom.printItems();
     }
 
     /** 
@@ -231,17 +234,7 @@ public class Game
     private void look()
     {
         System.out.println(currentRoom.getLongDescription());
-        if (currentRoom.getItems().size()==0){
-            System.out.println("There are no items in this room.");
-        }
-        else{
-            System.out.println("The item(s) in this room are:");
-            int i=0;
-            while(i<currentRoom.getItems().size()){
-                System.out.println(currentRoom.getItems().get(i).getName());
-                i++;
-            }
-        }
+        currentRoom.printItems();
     }
     
     /** 

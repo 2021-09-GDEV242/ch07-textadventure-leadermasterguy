@@ -50,9 +50,8 @@ public class Room
 
     /**
      * Removes an item into a room's ArrayList of items.
-     * Searches by name, does nothing if it doesn't find a match
+     * Searches by name, prints based on the results.
      * @param name The items's name.
-     * @return true if an item is successfully found/removed, false otherwise
      */
     public void removeItem(String name)
     {
@@ -132,6 +131,25 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
+    }
+    
+    /** 
+     * Prints out which items are within a room.
+     * Used in the look and goRoom methods.
+     */
+    public void printItems()
+    {
+        if (getItems().size()==0){
+            System.out.println("There are no items in this room.");
+        }
+        else{
+            System.out.println("The item(s) in this room are:");
+            int i=0;
+            while(i<getItems().size()){
+                System.out.println(getItems().get(i).getName());
+                i++;
+            }
+        }
     }
 }
 
