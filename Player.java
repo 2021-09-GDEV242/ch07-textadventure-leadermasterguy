@@ -14,6 +14,7 @@ import java.util.Arrays;
 public class Player
 {
     private ArrayList<Item> items; //items within the players inventory
+    private int locked = 1;
     /**
      * Create a player with an empty inventory, that can be filled with items.
      *
@@ -63,6 +64,22 @@ public class Player
     public ArrayList<Item> getInventory()
     {
         return items;
+    }
+    
+    /**
+     * Returns whether or not the player has a certain item.
+     * @return true if has item, false if not
+     */
+    public boolean containsItem(String name)
+    {
+        int i=0;
+        while(i<getInventory().size()){
+                if(items.get(i).getName().equals(name)){
+                    return true;
+                }
+                i++;
+            }
+        return false;
     }
     
     /** 

@@ -47,6 +47,8 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Player player;
+    private Room door;
+    private Room freedom;
     /**
      * Main Method.
      * Creates a game object, and runs the play method, starting the game.
@@ -72,7 +74,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office, freedom, stage, backstage, pub2, door, table, closet, stairs, basement, storage, security;
+        Room outside, theater, pub, lab, office, stage, backstage, pub2, table, closet, stairs, basement, storage, security;
 
         // create the rooms
         outside = new Room("outside the main entrance of the university");
@@ -80,7 +82,7 @@ public class Game
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
-        freedom = new Room("in the great outdoors");
+        freedom = new Room("you have escaped! The End");
         stage = new Room("on a stage");
         backstage = new Room("behind the stage");
         pub2 = new Room("at the very back of the campus pub");
@@ -126,10 +128,11 @@ public class Game
         freedom.setExit("south", door);
         
         stairs.setExit("south", basement);
-        stairs.setExit("south", lab);
+        stairs.setExit("north", lab);
         
         basement.setExit("east", storage);
         basement.setExit("west", closet);
+        basement.setExit("north", stairs);
         
         closet.setExit("east", basement);
         
@@ -249,6 +252,10 @@ public class Game
                 drop(command.getSecondWord());
                 break;
                 
+            case UNLOCK:
+                unlock();
+                break;
+                
                 
         }
         return wantToQuit;
@@ -363,7 +370,20 @@ public class Game
      */
     private void unlock()
     {
-        //player.dropItem(name);
+        if(currentRoom.getShortDescription().equals("by a mysterious door(locked)")&&player.containsItem("key")){
+            System.out.println("You unlock the door, and can now escape by going north.");
+            door.setExit("north", freedom);
+            return;
+        }
+        if(player.containsItem("key")){
+            System.out.println("You have a key, but there's nothing to unlock here.");
+            return;
+        }
+        if(currentRoom.getShortDescription().equals("by a mysterious door(locked)")){
+            System.out.println("It seems like you'll need a key to unlock this.");
+            return;
+        }
+        System.out.println("Unlock what with what?");
     }
     
     /** 

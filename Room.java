@@ -133,10 +133,8 @@ public class Room
     }
 
     /**
-     * Return the room that is reached if we go from this room in direction
-     * "direction". If there is no room in that direction, return null.
-     * @param direction The exit's direction.
-     * @return The room in the given direction.
+     * Return the room's description
+     * @return The room's description.
      */
     public Room getExit(String direction) 
     {
