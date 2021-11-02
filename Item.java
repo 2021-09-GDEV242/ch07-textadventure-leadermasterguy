@@ -16,6 +16,7 @@ public class Item
     private String name;
     private String description;
     private int weight;
+    private boolean key;
     /**
      * Create an item described "description", with a given weight value, and name.
      * @param name The item's name
@@ -23,11 +24,12 @@ public class Item
      * @param weight The item's weight.
      *
      */
-    public Item(String name,String description,int weight) 
+    public Item(String name,String description,int weight, boolean key) 
     {
         this.name = name;
         this.description = description;
         this.weight = weight;
+        this.key = key;
     }
 
     /**
@@ -52,5 +54,15 @@ public class Item
     public int getWeight()
     {
         return weight;
+    }
+    
+    /**
+     * important items are marked as "key", and cannot be dropped by the player
+     * true means "key", while most items are false
+     * @return The key value of the item
+     */
+    public boolean getKey()
+    {
+        return key;
     }
 }

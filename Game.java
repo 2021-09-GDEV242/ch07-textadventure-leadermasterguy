@@ -17,6 +17,7 @@ import java.util.Arrays;
  * 
  * Passing Requirements:
  * Implemented look command
+ * 15 rooms
  * 
  * C Requirements:
  * Added eat command, with a simple text response
@@ -29,6 +30,11 @@ import java.util.Arrays;
  * 
  * 
  * A Requirements:
+ * 
+ * Additional features:
+ * checkable inventory
+ * ability to take items from rooms(into the inventory)
+ * ability to drop items(not key items)
  * 
  * @author  Nicholas Trilone
  * @version 2021.11.01
@@ -64,35 +70,80 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room inside, theater, pub, lab, office, freedom, stage, backstage, pub2, door, table, closet, stairs, basement, storage, security;
 
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
+        inside = new Room("inside the main entrance of the university");
         theater = new Room("in a lecture theater");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
         office = new Room("in the computing admin office");
+        freedom = new Room("in the great outdoors");
+        stage = new Room("on a stage");
+        backstage = new Room("behind the stage");
+        pub2 = new Room("at the very back of the campus pub");
+        door = new Room("at the front door(locked)");
+        table = new Room("under a table, for some reason");
+        closet = new Room("inside of a storage closet");
+        stairs = new Room("on a set of creaky stairs");
+        basement = new Room("in a dark and creepy basement");
+        storage = new Room("in a room used for storage");
+        security = new Room("in a room used for security");
 
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        inside.setExit("east", theater);
+        inside.setExit("south", lab);
+        inside.setExit("west", pub);
+        inside.setExit("north", door);
 
-        theater.setExit("west", outside);
+        theater.setExit("west", inside);
+        theater.setExit("east", stage);
 
-        pub.setExit("east", outside);
+        pub.setExit("east", inside);
+        pub.setExit("west", pub2);
 
-        lab.setExit("north", outside);
+        lab.setExit("north", inside);
         lab.setExit("east", office);
+        lab.setExit("south", stairs);
 
         office.setExit("west", lab);
+        office.setExit("east", table);
+        office.setExit("south", security);
+        
+        table.setExit("west", office);
+        
+        security.setExit("north", office);
+        
+        stage.setExit("west", theater);
+        stage.setExit("east", backstage);
+        
+        backstage.setExit("west", stage);
+        
+        pub2.setExit("east", pub);
+        
+        freedom.setExit("south", door);
+        
+        stairs.setExit("south", basement);
+        stairs.setExit("south", lab);
+        
+        basement.setExit("east", storage);
+        basement.setExit("west", closet);
+        
+        closet.setExit("east", basement);
+        
+        storage.setExit("west", basement);
+        
+        inside.setExit("south", inside);
+        inside.setExit("north", freedom);
+        
+        
+        
         
         // add items to rooms
-        outside.addItem("book","A book idk", 2);
-        outside.addItem("key","An important looking key", 1);
-        outside.addItem("rock","Just a rock", 3);
+        inside.addItem("rock2","Who would've guessed that there are rocks outside?", 0, true);
+        inside.addItem("rock","Just a rock.", 3, false);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = inside;  // start game outside
     }
 
     /**
@@ -169,6 +220,10 @@ public class Game
                 
             case INVENTORY:
                 inventory();
+                break;
+                
+            case DROP:
+                drop(command.getSecondWord());
                 break;
         }
         return wantToQuit;
@@ -265,6 +320,16 @@ public class Game
     private void take(String name)
     {
         currentRoom.takeItem(name,player);
+    }
+    
+    /** 
+     * Causes the player to drop an item from their inventory.
+     * Does not work on important "key" items.
+     * @param name of item attempting to drop
+     */
+    private void drop(String name)
+    {
+        player.dropItem(name);
     }
     
     /** 

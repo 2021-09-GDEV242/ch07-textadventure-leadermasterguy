@@ -43,6 +43,10 @@ public class Player
         while(i>=0){
            if(items.get(i).getName().equals(name))
            {
+               if(items.get(i).getKey()==true){
+                   System.out.println("This item seems too important to simply drop.");
+                   return;
+               }
                System.out.println("You dropped the "+items.get(i).getName()+".");
                items.remove(i);
                return;
