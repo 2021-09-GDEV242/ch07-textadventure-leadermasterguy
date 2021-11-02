@@ -49,16 +49,26 @@ public class Room
     }
 
     /**
-     * Removes an item into a room's ArrayList of items.
+     * Removes an item from a room's ArrayList of items.
+     * @param description The items's index.
+     */
+    public void removeItem(int n)
+    {
+        items.remove(n);
+    }
+    
+    /**
+     * Removes an item into a room's ArrayList of items, and places it into the players inventory
      * Searches by name, prints based on the results.
      * @param name The items's name.
      */
-    public void removeItem(String name)
+    public void takeItem(String name, Player player)
     {
         int i=items.size()-1;
         while(i>=0){
            if(items.get(i).getName().equals(name))
            {
+               player.addItem(items.get(i));
                System.out.println("You take the "+items.get(i).getName()+"!");
                items.remove(i);
                return;
@@ -135,7 +145,6 @@ public class Room
     
     /** 
      * Prints out which items are within a room.
-     * Used in the look and goRoom methods.
      */
     public void printItems()
     {
@@ -143,10 +152,15 @@ public class Room
             System.out.println("There are no items in this room.");
         }
         else{
-            System.out.println("The item(s) in this room are:");
+            System.out.print("The item(s) in this room are: ");
             int i=0;
             while(i<getItems().size()){
-                System.out.println(getItems().get(i).getName());
+                if(i<getItems().size()-1){
+                    System.out.print(getItems().get(i).getName()+", ");
+                }
+                else{
+                    System.out.println(getItems().get(i).getName()+".");
+                }
                 i++;
             }
         }

@@ -37,4 +37,20 @@ public class Item
     {
         return name;
     }
+    
+    /**
+     * @return The description of the item
+     */
+    public String getDescription()
+    {
+        return description;
+    }
+    
+    /**
+     * @return The weight of the item
+     */
+    public int getWeight()
+    {
+        return weight;
+    }
 }

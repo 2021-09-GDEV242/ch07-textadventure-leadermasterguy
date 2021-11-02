@@ -23,6 +23,10 @@ import java.util.Arrays;
  * Streamlined printing of available commands
  * 
  * B Requirements:
+ * Added items to the game. Items have description and weight, and items are printed with the room descriptions.
+ * Made it so rooms could hold multiple items(via ArrayList).
+ * Made a player object that is capable of holding multiple items, and taking items from rooms.
+ * 
  * 
  * A Requirements:
  * 
@@ -34,7 +38,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-
+    private Player player;
     /**
      * Main Method.
      * Creates a game object, and runs the play method, starting the game.
@@ -52,6 +56,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        player = new Player();
     }
 
     /**
@@ -119,6 +124,7 @@ public class Game
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
+        currentRoom.printItems();
     }
 
     /**
@@ -159,6 +165,10 @@ public class Game
                 
             case TAKE:
                 take(command.getSecondWord());
+                break;
+                
+            case INVENTORY:
+                inventory();
                 break;
         }
         return wantToQuit;
@@ -254,6 +264,14 @@ public class Game
      */
     private void take(String name)
     {
-        currentRoom.removeItem(name);
+        currentRoom.takeItem(name,player);
+    }
+    
+    /** 
+     * Prints out information about the player's inventory
+     */
+    private void inventory()
+    {
+        player.printInventory();
     }
 }
