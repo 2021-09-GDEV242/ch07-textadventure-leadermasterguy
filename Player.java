@@ -14,14 +14,39 @@ import java.util.Arrays;
 public class Player
 {
     private ArrayList<Item> items; //items within the players inventory
-    private int locked = 1;
+    private int health;
     /**
      * Create a player with an empty inventory, that can be filled with items.
      *
      */
-    public Player() 
+    public Player(int health) 
     {
+         this.health=health;
          items = new ArrayList<>();
+    }
+    
+    /**
+     * Returns the health value of the player
+     * @return int representing player health
+     */
+    public int getHealth()
+    {
+        return health;
+    }
+    
+    /**
+     * Increases/decreases player health by provided value
+     * Positive numbers heal, and negative numbers hurt
+     * @param int representing player heal/hurt amount
+     */
+    public void changeHealthValue(int num)
+    {
+        if(health+num<=10){
+            health=health+num;
+        }
+        else{
+            health=10;
+        }
     }
     
     /**

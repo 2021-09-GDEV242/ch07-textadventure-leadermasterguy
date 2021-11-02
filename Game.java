@@ -30,8 +30,9 @@ import java.util.Arrays;
  * 
  * 
  * A Requirements:
- * locked door+key
- * 
+ * Added a locked door and a key that can be used to open it.
+ * Added a basic health system, that will drain over time.
+ * Made it so eating will regenerate health, up to a maximum of 10.
  * 
  * Additional features:
  * checkable inventory
@@ -49,6 +50,7 @@ public class Game
     private Player player;
     private Room door;
     private Room freedom;
+    private int counter=1;
     /**
      * Main Method.
      * Creates a game object, and runs the play method, starting the game.
@@ -66,7 +68,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        player = new Player();
+        player = new Player(10);
     }
 
     /**
@@ -304,6 +306,13 @@ public class Game
         
         //prints the objects that are inside of the room
         currentRoom.printItems();
+        
+        counter++;
+        if (counter==4){
+            counter=0;
+            player.changeHealthValue(-1);
+            System.out.println("You feel a sharp pain. You now have "+player.getHealth()+" Health");
+        }
     }
 
     /** 
@@ -336,12 +345,19 @@ public class Game
     
     /** 
      * Causes the player character to eat.
-     * Currently does nothing other than print a message.
+     * Will heal them for 2 health, up to a maximum of 10.
      * Has no parameters or return values.
      */
     private void eat()
     {
-        System.out.println("You have eaten now and you are not hungry any more.");
+        if(player.getHealth()==10){
+            System.out.println("You have eaten, although it doesn't seem to have done much.");
+        }
+        else{
+            player.changeHealthValue(2);
+            System.out.println("You heal and feel a bit better. You now have "+player.getHealth()+" health.");
+        }
+        
     }
     
     /** 
