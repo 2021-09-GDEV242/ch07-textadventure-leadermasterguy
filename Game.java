@@ -20,7 +20,7 @@ import java.util.Arrays;
  * 15+ rooms
  * 
  * C Requirements:
- * Added eat command, with a simple text response
+ * Added eat command, with a simple text response(added upon later)
  * Streamlined printing of available commands
  * 
  * B Requirements:
@@ -28,15 +28,13 @@ import java.util.Arrays;
  * Made it so rooms could hold multiple items(via ArrayList).
  * Made a player object that is capable of holding multiple items, and taking items from rooms.
  * 
- * 
  * A Requirements:
  * Added a locked door and a key that can be used to open it.
  * Added a basic health system, that will drain over time.
  * Made it so eating will regenerate health, up to a maximum of 10.
  * 
  * Additional features:
- * checkable inventory
- * ability to take items from rooms(into the inventory)
+ * checkable inventory(w/descriptions, names, and weight)
  * ability to drop items(not key items)
  * 
  * @author  Nicholas Trilone
@@ -47,9 +45,12 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    //player object
     private Player player;
+    //rooms required to be global
     private Room door;
     private Room freedom;
+    //counter for draining health
     private int counter=1;
     /**
      * Main Method.
@@ -141,9 +142,6 @@ public class Game
         storage.setExit("west", basement);
         
         door.setExit("south", outside);
-        //door.setExit("north", freedom);
-        
-        
         
         
         // add items to rooms
@@ -168,9 +166,6 @@ public class Game
         theater.addItem("note", "A crude drawing", 0, false);
         
         
-        
-        
-
         currentRoom = outside;  // start game outside
     }
 
@@ -263,8 +258,6 @@ public class Game
         return wantToQuit;
     }
 
-    // implementations of user commands:
-
     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the 
@@ -307,6 +300,7 @@ public class Game
         //prints the objects that are inside of the room
         currentRoom.printItems();
         
+        //counter that drains health over time
         counter++;
         if (counter==4){
             counter=0;
@@ -382,7 +376,9 @@ public class Game
     
     /** 
      * Player attempts to unlock a door
-     * @param name of item attempting to drop
+     * Will print different things depending on location/key ownership
+     * Will unlock door if in the right place with the key
+     * Has no parameters or return values.
      */
     private void unlock()
     {

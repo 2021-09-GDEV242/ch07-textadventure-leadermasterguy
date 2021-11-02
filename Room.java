@@ -39,9 +39,10 @@ public class Room
     
     /**
      * Adds an item into a room's ArrayList of items.
-     * @param description The items's name.
+     * @param name The items's name.
      * @param description The items's description.
-     * @param description The items's weight.
+     * @param weight The items's weight.
+     * @param key Whether or not the item is a key item(key items cannot be dropped).
      */
     public void addItem(String name,String description, int weight, boolean key)
     {
@@ -50,7 +51,7 @@ public class Room
 
     /**
      * Removes an item from a room's ArrayList of items.
-     * @param description The items's index.
+     * @param n The items's index.
      */
     public void removeItem(int n)
     {
@@ -143,6 +144,7 @@ public class Room
     
     /** 
      * Prints out which items are within a room.
+     * No return or parameter values.
      */
     public void printItems()
     {

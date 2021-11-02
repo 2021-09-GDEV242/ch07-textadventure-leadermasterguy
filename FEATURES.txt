@@ -1,0 +1,13 @@
+ * B Requirements:
+ * Added items to the game. Items have description and weight, and items are printed with the room descriptions.
+ * Made it so rooms could hold multiple items(via ArrayList).
+ * Made a player object that is capable of holding multiple items, and taking items from rooms.
+ * 
+ * A Requirements:
+ * Added a locked door and a key that can be used to open it.
+ * Added a basic health system, that will drain over time.
+ * Made it so eating will regenerate health, up to a maximum of 10.
+ * 
+ * Additional features:
+ * checkable inventory(w/descriptions, names, and weight)
+ * ability to drop items(not key items)

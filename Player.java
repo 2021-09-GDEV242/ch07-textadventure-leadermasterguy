@@ -17,7 +17,7 @@ public class Player
     private int health;
     /**
      * Create a player with an empty inventory, that can be filled with items.
-     *
+     * @param health represents the amount of health the player has, can be manipulated through the use of other methods
      */
     public Player(int health) 
     {
@@ -109,6 +109,7 @@ public class Player
     
     /** 
      * Prints out which items are the players inventory, and their details.
+     * No return or parameter values.
      */
     public void printInventory()
     {

@@ -22,7 +22,7 @@ public class Item
      * @param name The item's name
      * @param description The item's description.
      * @param weight The item's weight.
-     *
+     * @param key Whether or not the item is a key item.
      */
     public Item(String name,String description,int weight, boolean key) 
     {
