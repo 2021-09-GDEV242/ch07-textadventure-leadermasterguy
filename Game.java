@@ -17,7 +17,7 @@ import java.util.Arrays;
  * 
  * Passing Requirements:
  * Implemented look command
- * 15 rooms
+ * 15+ rooms
  * 
  * C Requirements:
  * Added eat command, with a simple text response
@@ -30,6 +30,8 @@ import java.util.Arrays;
  * 
  * 
  * A Requirements:
+ * locked door+key
+ * 
  * 
  * Additional features:
  * checkable inventory
@@ -70,10 +72,10 @@ public class Game
      */
     private void createRooms()
     {
-        Room inside, theater, pub, lab, office, freedom, stage, backstage, pub2, door, table, closet, stairs, basement, storage, security;
+        Room outside, theater, pub, lab, office, freedom, stage, backstage, pub2, door, table, closet, stairs, basement, storage, security;
 
         // create the rooms
-        inside = new Room("inside the main entrance of the university");
+        outside = new Room("outside the main entrance of the university");
         theater = new Room("in a lecture theater");
         pub = new Room("in the campus pub");
         lab = new Room("in a computing lab");
@@ -82,7 +84,7 @@ public class Game
         stage = new Room("on a stage");
         backstage = new Room("behind the stage");
         pub2 = new Room("at the very back of the campus pub");
-        door = new Room("at the front door(locked)");
+        door = new Room("by a mysterious door(locked)");
         table = new Room("under a table, for some reason");
         closet = new Room("inside of a storage closet");
         stairs = new Room("on a set of creaky stairs");
@@ -91,18 +93,18 @@ public class Game
         security = new Room("in a room used for security");
 
         // initialise room exits
-        inside.setExit("east", theater);
-        inside.setExit("south", lab);
-        inside.setExit("west", pub);
-        inside.setExit("north", door);
+        outside.setExit("east", theater);
+        outside.setExit("south", lab);
+        outside.setExit("west", pub);
+        outside.setExit("north", door);
 
-        theater.setExit("west", inside);
+        theater.setExit("west", outside);
         theater.setExit("east", stage);
 
-        pub.setExit("east", inside);
+        pub.setExit("east", outside);
         pub.setExit("west", pub2);
 
-        lab.setExit("north", inside);
+        lab.setExit("north", outside);
         lab.setExit("east", office);
         lab.setExit("south", stairs);
 
@@ -133,17 +135,38 @@ public class Game
         
         storage.setExit("west", basement);
         
-        inside.setExit("south", inside);
-        inside.setExit("north", freedom);
+        door.setExit("south", outside);
+        //door.setExit("north", freedom);
         
         
         
         
         // add items to rooms
-        inside.addItem("rock2","Who would've guessed that there are rocks outside?", 0, true);
-        inside.addItem("rock","Just a rock.", 3, false);
+        outside.addItem("rock2","Who would've guessed that there are rocks outside?", 4, false);
+        outside.addItem("rock","Just a rock.", 3, false);
+        
+        table.addItem("gum","Pre-chewed.", 1, false);
+        
+        closet.addItem("key","Seems slightly important.", 0, true);
+        
+        storage.addItem("folder","A folder full of useless papers.", 2, false);
+        storage.addItem("flashlight","No batteries included.", 3, false);
+        
+        stairs.addItem("spider","Your very first friend.", 0, false);
+        
+        pub2.addItem("bottles","All empty", 5, false);
+        
+        security.addItem("equipment","All the security equipment you can carry. Will sell for a fortune.", 35, false);
+        
+        backstage.addItem("banjo", "Finders keepers.", 5, false);
+        
+        theater.addItem("note", "A crude drawing", 0, false);
+        
+        
+        
+        
 
-        currentRoom = inside;  // start game outside
+        currentRoom = outside;  // start game outside
     }
 
     /**
@@ -225,6 +248,8 @@ public class Game
             case DROP:
                 drop(command.getSecondWord());
                 break;
+                
+                
         }
         return wantToQuit;
     }
@@ -330,6 +355,15 @@ public class Game
     private void drop(String name)
     {
         player.dropItem(name);
+    }
+    
+    /** 
+     * Player attempts to unlock a door
+     * @param name of item attempting to drop
+     */
+    private void unlock()
+    {
+        //player.dropItem(name);
     }
     
     /** 
